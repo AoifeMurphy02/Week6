@@ -20,8 +20,7 @@ public class BoundedPriorityQueueSet extends LinkedList {
         max = MAX;
     }
 
-    public BoundedPriorityQueueSet(int max) {
-        max = MAX;
+    public BoundedPriorityQueueSet(int max) {  
         this.max = max;
     }
 
@@ -56,7 +55,8 @@ public class BoundedPriorityQueueSet extends LinkedList {
         return true;
     }
     public boolean isFull(){
-        return size == max;
+        return size >= max;
+      
     }
     public Task peek(){
         if(size == 0){
@@ -75,5 +75,10 @@ public class BoundedPriorityQueueSet extends LinkedList {
      @Override
     public boolean add(Task value, int pos) {
         throw new UnsupportedOperationException("Method not available for queues");
+    }
+    
+    @Override
+    public Task remove(int num){
+         throw new UnsupportedOperationException("Method not available for queues"); 
     }
 }
