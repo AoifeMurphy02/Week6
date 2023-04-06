@@ -19,6 +19,10 @@ public class BoundedPriorityQueueSet extends LinkedList {
         super();
         max = MAX;
     }
+    public BoundedPriorityQueueSet(int max) {
+        max = MAX;
+        this.max = max;
+    }
     @Override
  public boolean add(Task value) {
 
@@ -57,8 +61,5 @@ public class BoundedPriorityQueueSet extends LinkedList {
 
 
     
-    public BoundedPriorityQueueSet(int max) {
-        max = MAX;
-        this.max = max;
-    }
+    
 }
