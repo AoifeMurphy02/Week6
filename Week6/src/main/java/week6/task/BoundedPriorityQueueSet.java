@@ -19,12 +19,14 @@ public class BoundedPriorityQueueSet extends LinkedList {
         super();
         max = MAX;
     }
+
     public BoundedPriorityQueueSet(int max) {
         max = MAX;
         this.max = max;
     }
+
     @Override
- public boolean add(Task value) {
+    public boolean add(Task value) {
 
         Node newNode = new Node(value);
 
@@ -32,34 +34,36 @@ public class BoundedPriorityQueueSet extends LinkedList {
 
             first = newNode;
             last = newNode;
-        }
- 
-        else if(value.compareTo( first.data) <0){
-         newNode.next = first;
-          first = newNode;
-         
-        }
-         else{
-           Node current = first.next;
+        } else if (value.compareTo(first.data) < 0) {
+            newNode.next = first;
+            first = newNode;
+
+        } else {
+            Node current = first.next;
             Node prev = first;
-            while(current != null && value.compareTo(current.data)>0){
+            while (current != null && value.compareTo(current.data) > 0) {
                 prev = current;
                 current = current.next;
-        }
-         
-        
+            }
+
             prev.next = newNode;
             newNode.next = current;
-        
-        if(current == null){
-          last = newNode;  
-        }
+
+            if (current == null) {
+                last = newNode;
+            }
         }
         return true;
     }
-
-
-
-    
-    
+    public boolean isFull(){
+        return size == max;
+    }
+    public Task peek(){
+        if(size == 0){
+            return null;
+        }
+        else{
+            return first.data;
+        }
+    }
 }
