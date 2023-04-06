@@ -66,4 +66,14 @@ public class BoundedPriorityQueueSet extends LinkedList {
             return first.data;
         }
     }
+    public Task remove(){
+        if(isEmpty()){
+            throw new NoSuchElementException("The queue is empty");
+        }
+        return super.remove(0);
+    }
+     @Override
+    public boolean add(Task value, int pos) {
+        throw new UnsupportedOperationException("Method not available for queues");
+    }
 }
