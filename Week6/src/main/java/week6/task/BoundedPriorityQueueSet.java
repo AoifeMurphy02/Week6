@@ -39,7 +39,7 @@ private static final int MAX = 10;
          Node prev = null;
          int pos =0;
            
-       while (current != null && value.compareTo(current.data) > 0) {
+       while (current != null && value.compareTo(current.data) < 0) {
            prev = current;
            current = current.next;
            pos++;
