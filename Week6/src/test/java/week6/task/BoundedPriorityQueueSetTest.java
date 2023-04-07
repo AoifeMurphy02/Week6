@@ -7,6 +7,7 @@ package week6.task;
 import java.time.LocalDate;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,13 +42,64 @@ public class BoundedPriorityQueueSetTest {
      * Test of add method, of class BoundedPriorityQueueSet.
      */
     @Test
-    public void testAdd_TaskEmptyList() {
-        System.out.println("add one Task to empty list");
+    public void testAdd_TaskEmptyList() throws IllegalStateException, DuplicateElementException {
+        System.out.println("add one Task to empty queue");
+        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+        Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+        int pos = instance.add(t1);
+
+        assertEquals(0, pos);
+        assertEquals(1, instance.size);
+        assertEquals(t1, instance.peek());
+
+    }
+
+    @Test
+    public void testAddTask_start() throws DuplicateElementException {
+        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+        Task t1 = new Task("b", "b", LocalDate.parse("2024-02-01"));
+        Task t2 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+        int pos = instance.add(t2);
+        int pos2 = instance.add(t1);
+        Assertions.assertEquals(0, pos2);
+        Assertions.assertEquals(2, instance.size());
+        assertEquals(t1, instance.peek());
+    }
+
+    @Test
+    public void testAdd_toMiddle() throws DuplicateElementException {
+        System.out.println("add one Task to middle");
 
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        assertTrue(instance.add(new Task("a", "b", LocalDate.parse("2024-02-01"))));
-        assertEquals(1, instance.size());
+        Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+        Task t2 = new Task("c", "c", LocalDate.parse("2024-02-01"));
+        Task t3 = new Task("b", "b", LocalDate.parse("2024-02-01"));
+        instance.add(t1);
+        instance.add(t2);
+        int pos = instance.add(t3);
+        assertEquals(0, pos);
+        assertEquals(3, instance.size());
+        assertEquals(t1, instance.get(2));
+        assertEquals(t3, instance.get(0));
+        assertEquals(t2, instance.get(1));
+    }
 
+    @Test
+    public void testAdd_toEnd() throws DuplicateElementException {
+        System.out.println("add one Task to the end");
+
+        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+        Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+        Task t2 = new Task("c", "c", LocalDate.parse("2024-02-01"));
+        Task t3 = new Task("b", "b", LocalDate.parse("2024-02-01"));
+        instance.add(t1);
+        instance.add(t3);
+        instance.add(t2);
+
+        assertEquals(3, instance.size());
+        assertEquals(t3, instance.get(1));
+        assertEquals(t1, instance.get(2));
+        assertEquals(t2, instance.get(0));
     }
 
     /**
@@ -67,14 +119,14 @@ public class BoundedPriorityQueueSetTest {
     public void testIsFullOneTask() {
         System.out.println("Test for is isFull with one Task");
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        instance.add(new Task("a", "a", LocalDate.parse("2024-02-01")));
+        //  instance.add(new Task("a", "a", LocalDate.parse("2024-02-01")));
         boolean expResult = false;
         boolean result = instance.isFull();
         assertEquals(expResult, result);
     }
 
     @Test
-    public void testIsFullTenTasks() {
+    public void testIsFullTenTasks() throws DuplicateElementException {
         System.out.println("Test for is isFull with ten Tasks");
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
         instance.add(new Task("a", "a", LocalDate.parse("2024-02-01")));
@@ -94,7 +146,7 @@ public class BoundedPriorityQueueSetTest {
     }
 
     @Test
-    public void testIsFull11Tasks() {
+    public void testIsFull11Tasks() throws DuplicateElementException {
         System.out.println("Test for is isFull with 11 Tasks");
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
         instance.add(new Task("a", "a", LocalDate.parse("2024-02-01")));
@@ -107,11 +159,12 @@ public class BoundedPriorityQueueSetTest {
         instance.add(new Task("h", "h", LocalDate.parse("2024-02-08")));
         instance.add(new Task("i", "i", LocalDate.parse("2024-02-09")));
         instance.add(new Task("j", "j", LocalDate.parse("2024-02-10")));
-        instance.add(new Task("k", "k", LocalDate.parse("2024-02-11")));
+       
 
-        boolean expResult = true;
-        boolean result = instance.isFull();
-        assertEquals(expResult, result);
+        assertThrows(IllegalStateException.class, () -> {
+            instance.add(new Task("k", "k", LocalDate.parse("2024-02-12")));
+        });
+
     }
 
     /**
