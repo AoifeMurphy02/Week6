@@ -77,11 +77,11 @@ public class BoundedPriorityQueueSetTest {
         instance.add(t1);
         instance.add(t2);
         int pos = instance.add(t3);
-        assertEquals(0, pos);
+        assertEquals(1, pos);
         assertEquals(3, instance.size());
         assertEquals(t1, instance.get(2));
-        assertEquals(t3, instance.get(0));
-        assertEquals(t2, instance.get(1));
+        assertEquals(t3, instance.get(1));
+        assertEquals(t2, instance.get(0));
     }
 
     @Test
@@ -159,7 +159,6 @@ public class BoundedPriorityQueueSetTest {
         instance.add(new Task("h", "h", LocalDate.parse("2024-02-08")));
         instance.add(new Task("i", "i", LocalDate.parse("2024-02-09")));
         instance.add(new Task("j", "j", LocalDate.parse("2024-02-10")));
-       
 
         assertThrows(IllegalStateException.class, () -> {
             instance.add(new Task("k", "k", LocalDate.parse("2024-02-12")));
@@ -171,59 +170,44 @@ public class BoundedPriorityQueueSetTest {
      * Test of peek method, of class BoundedPriorityQueueSet.
      */
     @Test
-    public void testPeek() {
-        System.out.println("peek");
+    public void testPeekEmpty() {
+        System.out.println("peek empty queue");
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        Task expResult = null;
-        Task result = instance.peek();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNull(instance.peek());
+
+    }
+
+    @Test
+    public void testPeekTwoTasks() throws DuplicateElementException {
+        System.out.println("peek two tasks");
+        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+        Task task1 = new Task("Task 1", "1", LocalDate.parse("2024-02-01"));
+        Task task2 = new Task("Task 2", "2", LocalDate.parse("2024-02-10"));
+        instance.add(task1);
+        instance.add(task2);
+        assertEquals(task2, instance.peek());
     }
 
     /**
      * Test of remove method, of class BoundedPriorityQueueSet.
      */
     @Test
-    public void testRemove_0args() {
-        System.out.println("remove");
+    public void testRemoveFirst() throws DuplicateElementException {
+        System.out.println("remove first");
+      
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        Task expResult = null;
+        Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+        Task t2 = new Task("b", "b", LocalDate.parse("2024-02-01"));
+        Task t3 = new Task("c", "c", LocalDate.parse("2024-02-01"));
+        instance.add(t1);
+        instance.add(t2);
+        instance.add(t3);
+        
         Task result = instance.remove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of add method, of class BoundedPriorityQueueSet.
-     */
-    @Test
-    public void testAdd_Task_int() {
-        System.out.println("add");
-        Task value = null;
-        int pos = 0;
-        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        boolean expResult = false;
-        boolean result = instance.add(value, pos);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of remove method, of class BoundedPriorityQueueSet.
-     */
-    @Test
-    public void testRemove_int() {
-        System.out.println("remove");
-        int num = 0;
-        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        Task expResult = null;
-        Task result = instance.remove(num);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(2, instance.size);
+        assertEquals(t3, result);
+       assertEquals(t1, instance.get(1));
+       assertEquals(t2, instance.get(0));
     }
 
 }
