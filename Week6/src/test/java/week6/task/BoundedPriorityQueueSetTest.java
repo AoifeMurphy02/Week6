@@ -5,6 +5,7 @@
 package week6.task;
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -192,9 +193,22 @@ public class BoundedPriorityQueueSetTest {
      * Test of remove method, of class BoundedPriorityQueueSet.
      */
     @Test
+    public void testRemoveEmptyQueue() throws DuplicateElementException {
+        System.out.println("remove from empty queue");
+
+        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+        try {
+            instance.remove();
+            fail("NoSuchElementException to be thrown");
+        } catch (NoSuchElementException ex) {
+            assertEquals("The queue is empty", ex.getMessage());
+        }
+    }
+
+    @Test
     public void testRemoveFirst() throws DuplicateElementException {
         System.out.println("remove first");
-      
+
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
         Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
         Task t2 = new Task("b", "b", LocalDate.parse("2024-02-01"));
@@ -202,12 +216,28 @@ public class BoundedPriorityQueueSetTest {
         instance.add(t1);
         instance.add(t2);
         instance.add(t3);
-        
+
         Task result = instance.remove();
         assertEquals(2, instance.size);
         assertEquals(t3, result);
-       assertEquals(t1, instance.get(1));
-       assertEquals(t2, instance.get(0));
+        assertEquals(t1, instance.get(1));
+        assertEquals(t2, instance.get(0));
     }
 
+    @Test
+    public void testRemoveOnly1Task() throws DuplicateElementException {
+        System.out.println("remove Only 1 Task");
+
+        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+        Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+
+        instance.add(t1);
+
+        Task result = instance.remove();
+        assertEquals(0, instance.size);
+
+        assertEquals(t1, result);
+        assertTrue(instance.isEmpty());
+
+    }
 }
