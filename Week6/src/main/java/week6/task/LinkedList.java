@@ -58,8 +58,7 @@ public class LinkedList {
         }
         return current.data;
     }
-
-    public boolean add(Task value) {
+ public int add(Task value) throws DuplicateElementException {
         Node newNode = new Node(value);
         if (first == null) {
             first = newNode;
@@ -69,10 +68,14 @@ public class LinkedList {
             last = newNode;
         }
         size++;
-        return true;
+       int index = indexOf(value);
+       return index;
     }
 
-    public boolean add(Task value, int index) {
+   
+    
+
+    public int add(Task value, int index) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Invalid position provided");
         }
@@ -92,7 +95,7 @@ public class LinkedList {
         size++;
         
     }
-        return true;
+        return index;
     }
 
     public int indexOf(Task value) {
