@@ -92,9 +92,22 @@ private LocalDate deadline;
         return "Task{" + "owner=" + owner + ", description=" + description + ", deadline=" + deadline + '}';
     }
 
-    @Override
-    public int compareTo(Task t) {
-    return this.deadline.compareTo(t.getDeadline());
+   @Override
+    public int compareTo(Task otherTask) {
+        // Compare by deadline first
+        int deadlineComparison = this.deadline.compareTo(otherTask.getDeadline());
+        if (deadlineComparison != 0) {
+            return deadlineComparison;
+        }
+
+        // If deadline is the same, compare by owner
+        int ownerComparison = this.owner.compareTo(otherTask.getOwner());
+        if (ownerComparison != 0) {
+            return ownerComparison;
+        }
+
+        // If owner is the same, compare by description
+        return this.description.compareTo(otherTask.getDescription());
     }
 
 
