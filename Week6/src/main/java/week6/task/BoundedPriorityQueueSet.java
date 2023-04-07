@@ -11,53 +11,54 @@ import java.util.NoSuchElementException;
  * @author aoife
  */
 public class BoundedPriorityQueueSet extends LinkedList {
-
-    private static final int MAX = 10;
-    private final int max;
-
-    public BoundedPriorityQueueSet() {
-        super();
-        max = MAX;
+private static final int MAX = 10;
+     private final int max;
+     
+      public BoundedPriorityQueueSet(){
+          super();
+          max = MAX;
     }
-
-    public BoundedPriorityQueueSet(int max) {  
-        this.max = max;
+      public BoundedPriorityQueueSet(int maxCap) {
+           super();
+          this.max = maxCap;
+        
     }
+  public boolean isFull(){
+        return size >= max;
+    }   
+  
 
     @Override
-    public boolean add(Task value) {
+    public int add(Task value) throws DuplicateElementException {
 
-        Node newNode = new Node(value);
-
-        if (isEmpty()) {
-
-            first = newNode;
-            last = newNode;
-        } else if (value.compareTo(first.data) < 0) {
-            newNode.next = first;
-            first = newNode;
-
-        } else {
-            Node current = first.next;
-            Node prev = first;
-            while (current != null && value.compareTo(current.data) > 0) {
-                prev = current;
-                current = current.next;
-            }
-
-            prev.next = newNode;
-            newNode.next = current;
-
-            if (current == null) {
-                last = newNode;
-            }
+        if (isFull()) {
+            throw new IllegalStateException("Queue is full");
         }
-        return true;
+         Node newNode = new Node(value);
+         Node current = first;
+         Node prev = null;
+         int pos =0;
+           
+       while (current != null && value.compareTo(current.data) > 0) {
+           prev = current;
+           current = current.next;
+           pos++;
+        } 
+       if(current != null && value.equals(current.data)){
+       throw new DuplicateElementException("Task is alrady in the queue");
+       }
+       if (prev == null) {
+                first = newNode;
+            }
+       else{
+           prev.next = newNode;
+        }
+       newNode.next=current;
+        size++;
+        int index = indexOf(value);
+       return index;
     }
-    public boolean isFull(){
-        return size >= max;
-      
-    }
+
     public Task peek(){
         if(size == 0){
             return null;
@@ -73,7 +74,7 @@ public class BoundedPriorityQueueSet extends LinkedList {
         return super.remove(0);
     }
      @Override
-    public boolean add(Task value, int pos) {
+    public int add(Task value, int pos) {
         throw new UnsupportedOperationException("Method not available for queues");
     }
     
