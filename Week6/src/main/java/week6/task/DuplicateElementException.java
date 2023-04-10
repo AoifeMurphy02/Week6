@@ -11,7 +11,7 @@ package week6.task;
 public class DuplicateElementException extends Exception {
 
     public DuplicateElementException(String message) {
-        System.out.println((message));
+        super(message);
     }
     
 }
