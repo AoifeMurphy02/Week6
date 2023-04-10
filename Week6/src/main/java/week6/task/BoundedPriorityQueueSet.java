@@ -28,7 +28,8 @@ public class BoundedPriorityQueueSet extends LinkedList {
     }
 
     /**
-     * constructs a BoundedPriorityQueueSet with a maximun capacity passed to it 
+     * constructs a BoundedPriorityQueueSet with a maximun capacity passed to it
+     *
      * @param maxCap the maximun capacity
      */
     public BoundedPriorityQueueSet(int maxCap) {
@@ -36,17 +37,21 @@ public class BoundedPriorityQueueSet extends LinkedList {
         this.max = maxCap;
 
     }
+
     /**
      * see if the queue is full
-     * @return true if its full or false if its not 
+     *
+     * @return true if its full or false if its not
      */
     public boolean isFull() {
         return size >= max;
     }
+
     /**
      * Adds a task to the queue in order of the Task's priority
+     *
      * @param value the Task to be added to the queue
-     * @return the position the Task was added at 
+     * @return the position the Task was added at
      * @throws DuplicateElementException if the Task is in the queue already
      * @throws IllegalStateException if the queue is full
      */
@@ -79,9 +84,11 @@ public class BoundedPriorityQueueSet extends LinkedList {
 
         return pos;
     }
+
     /**
-     * To show the firs element in the queue 
-     * @return the first task in the quere 
+     * To show the firs element in the queue
+     *
+     * @return the first task in the queue
      */
     public Task peek() {
         if (size == 0) {
@@ -91,12 +98,14 @@ public class BoundedPriorityQueueSet extends LinkedList {
             return first.data;
         }
     }
+
     /**
-     * Revomed and returns the element at the front of the queue
+     * Revomes and returns the element at the front of the queue
+     *
      * @return the elemnt at the front of this queue
      * @throws NoSuchElementException if this queue is empty.
      */
-    
+
     public Task remove() {
         if (isEmpty()) {
             throw new NoSuchElementException("The queue is empty");
