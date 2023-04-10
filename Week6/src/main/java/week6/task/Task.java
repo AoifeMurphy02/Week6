@@ -15,12 +15,17 @@ import java.util.Objects;
  * @author aoife
  */
 public class Task implements Comparable<Task> {
-// Implement a class named Task. A Task is made up of two String fields: an owner and a description. The Task class should
-//also contain a LocalDate (from java.time) field called deadline. Your Task class should provide the following functionality:
+
 private String owner;
 private String description;
 private LocalDate deadline;
-
+/**
+ * Creates a new Task with an owner, description and deadline 
+ * @param owner the owner of the task
+ * @param description the description of the task
+ * @param deadline the deadline for the task
+ * @throws IllegalArgumentException if the deadline is before the current date
+ */
     public Task(String owner, String description, LocalDate deadline) {
         if(deadline.compareTo(LocalDate.now())<0){
             throw new IllegalArgumentException("Deadline cant be before the current time!");
