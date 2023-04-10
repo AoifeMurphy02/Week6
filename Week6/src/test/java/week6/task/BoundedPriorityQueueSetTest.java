@@ -104,7 +104,7 @@ public class BoundedPriorityQueueSetTest {
     }
 
     /**
-     * Test of isFull method, of class BoundedPriorityQueueSet.
+     * Test of isFull method with 0 Tasks
      */
     @Test
     public void testIsFull0Task() {
@@ -116,6 +116,9 @@ public class BoundedPriorityQueueSetTest {
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of isFull method with 1 Task
+     */
     @Test
     public void testIsFullOneTask() {
         System.out.println("Test for is isFull with one Task");
@@ -126,6 +129,9 @@ public class BoundedPriorityQueueSetTest {
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of isFull method with 10 Tasks
+     */
     @Test
     public void testIsFullTenTasks() throws DuplicateElementException {
         System.out.println("Test for is isFull with ten Tasks");
@@ -146,6 +152,9 @@ public class BoundedPriorityQueueSetTest {
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of isFull method with 11 Tasks
+     */
     @Test
     public void testIsFull11Tasks() throws DuplicateElementException {
         System.out.println("Test for is isFull with 11 Tasks");
@@ -168,7 +177,7 @@ public class BoundedPriorityQueueSetTest {
     }
 
     /**
-     * Test of peek method, of class BoundedPriorityQueueSet.
+     * Test of peek method with a empty queue.
      */
     @Test
     public void testPeekEmpty() {
@@ -178,6 +187,9 @@ public class BoundedPriorityQueueSetTest {
 
     }
 
+    /**
+     * Test of peek method with a 2 tasks in the queue.
+     */
     @Test
     public void testPeekTwoTasks() throws DuplicateElementException {
         System.out.println("peek two tasks");
@@ -190,7 +202,7 @@ public class BoundedPriorityQueueSetTest {
     }
 
     /**
-     * Test of remove method, of class BoundedPriorityQueueSet.
+     * Test of remove from an empty queue .
      */
     @Test
     public void testRemoveEmptyQueue() throws DuplicateElementException {
@@ -205,6 +217,9 @@ public class BoundedPriorityQueueSetTest {
         }
     }
 
+    /**
+     * Test of remove from the first place in the queue .
+     */
     @Test
     public void testRemoveFirst() throws DuplicateElementException {
         System.out.println("remove first");
@@ -224,6 +239,9 @@ public class BoundedPriorityQueueSetTest {
         assertEquals(t2, instance.get(0));
     }
 
+    /**
+     * Test of remove with only 1 task in the queue.
+     */
     @Test
     public void testRemoveOnly1Task() throws DuplicateElementException {
         System.out.println("remove Only 1 Task");
