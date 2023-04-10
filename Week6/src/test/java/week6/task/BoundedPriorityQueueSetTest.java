@@ -40,10 +40,10 @@ public class BoundedPriorityQueueSetTest {
     }
 
     /**
-     * Test of add method, of class BoundedPriorityQueueSet.
+     * Test of add method with an empty queue
      */
     @Test
-    public void testAdd_TaskEmptyList() throws IllegalStateException, DuplicateElementException {
+    public void testAdd_TaskEmptyQueue() throws IllegalStateException, DuplicateElementException {
         System.out.println("add one Task to empty queue");
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
         Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
@@ -55,6 +55,9 @@ public class BoundedPriorityQueueSetTest {
 
     }
 
+    /**
+     * Test of add method with an adding to the start
+     */
     @Test
     public void testAddTask_start() throws DuplicateElementException {
         BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
@@ -67,6 +70,9 @@ public class BoundedPriorityQueueSetTest {
         assertEquals(t1, instance.peek());
     }
 
+    /**
+     * Test of add method with adding to the middle of the queue
+     */
     @Test
     public void testAdd_toMiddle() throws DuplicateElementException {
         System.out.println("add one Task to middle");
@@ -85,6 +91,9 @@ public class BoundedPriorityQueueSetTest {
         assertEquals(t2, instance.get(0));
     }
 
+    /**
+     * Test of add method with adding to the end of the queue
+     */
     @Test
     public void testAdd_toEnd() throws DuplicateElementException {
         System.out.println("add one Task to the end");
@@ -101,6 +110,29 @@ public class BoundedPriorityQueueSetTest {
         assertEquals(t3, instance.get(1));
         assertEquals(t1, instance.get(2));
         assertEquals(t2, instance.get(0));
+    }
+
+    /**
+     * Test of add method with adding two of the same task to the queue
+     */
+    @Test
+    public void testAddTwooftheSame() throws DuplicateElementException {
+        System.out.println("add two of the same Task");
+
+        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+        Task t1 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+        Task t2 = new Task("a", "a", LocalDate.parse("2024-02-01"));
+
+        instance.add(t1);
+
+        try {
+            instance.add(t2);
+            instance.add(t1);
+            fail("DuplicateElementException to be thrown");
+        } catch (DuplicateElementException ex) {
+            assertEquals("Task is already in the queue", ex.getMessage());
+        }
+        assertEquals(1, instance.size());
     }
 
     /**
